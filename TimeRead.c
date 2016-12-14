@@ -2,6 +2,34 @@
 #include <stdlib.h>
 #include <time.h>
 #define FRANCE +1
+#define LENGHT_TERMINAL 80
+#define HEIGHT_TERMINAL 24
+
+
+void printf_center ()
+{
+        unsigned int n;
+        unsigned int i;
+        for (i = 0; i < (HEIGHT_TERMINAL-1)/2 ; i++)
+        {
+                putchar('\n');
+        }
+
+        for (n = 0 ; n  < (LENGHT_TERMINAL)/2 ; n++)
+        {
+                putchar(' ');
+        }
+	timeRead();
+	for (n= 0; n< (LENGHT_TERMINAL-36)/2 ; n++)
+	{
+		putchar(' ');
+	}
+	printSentenceRefresh();
+        for (i = 0; i < (HEIGHT_TERMINAL)/2 ; i++)
+        {
+                putchar('\n');
+        }
+}
 
 void timeRead()
 {
@@ -36,8 +64,7 @@ int main()
 	while(1)
 
 	{
-		timeRead();
-		printSentenceRefresh();
+		printf_center();
 		system("clear");
 	}
 
