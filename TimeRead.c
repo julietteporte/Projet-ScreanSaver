@@ -28,12 +28,12 @@ void printf_center (char sentence[]) // fonction de centrage
 
 void timeRead() // fonction qui lit l'heur
 {
-	time_t hour; 
-	struct tm date;
+	time_t hour; //time_t: est un type de variable qui sert à indiquer un nombre de secondes 
+	struct tm date; //structure contenant les variables de temps
 
-	time(&hour);
-	date = *gmtime(&hour);
-	printf(" %d:%d:%d\n ",(date.tm_hour+FRANCE+24)%24, date.tm_min, date.tm_sec);
+	time(&hour);//récupère le temps
+	date = *gmtime(&hour);// obtient l'heure GMT
+	printf(" %d:%d:%d\n ",(date.tm_hour+FRANCE+24)%24, date.tm_min, date.tm_sec);//écrit le l'heure, minutes et secondes
 	/*tm_wday, le jour de la semaine est exprimé en 3 lettres dans son nom anglais (ex : Lundi -> Mon);
 	tm_mon, le nom du mois exprimé en 3 lettres dans son anglais (ex : Juin -> Jun) ;
 	tm_mday, le jour du mois;
