@@ -10,7 +10,7 @@ struct picture{
 
 	int Columns, Rows;
 	char feature[2];
-	int **pictureArray;
+	char **pictureArray;
 
 };
 
@@ -19,9 +19,8 @@ struct picture{
 picture* convertPictureIntoArray(FILE *fileRead, picture *Picture);
 void printPicture(picture *Picture);
 picture* pbmReader(char fileName[]);
-void HeightPbm(int pictureHeight);
-void LenghtPbm(int pictureLenght);
 
+void Height(picture* Picture);
 
 
 #endif

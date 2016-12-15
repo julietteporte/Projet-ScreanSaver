@@ -92,10 +92,10 @@ picture* pbmReader(char fileName[])
 
 	if(condition != 0)
 	{
-		actualPicture->pictureArray = malloc(actualPicture->Rows * sizeof(int*));//allocation mémoire pour le tableaux contenat l'image
+		actualPicture->pictureArray = malloc(actualPicture->Rows * sizeof(char*));//allocation mémoire pour le tableaux contenat l'image
         	for(i = 0; i < actualPicture->Rows; i++)
         	{
-			actualPicture->pictureArray[i] = malloc((actualPicture->Columns+1) * sizeof(int));
+			actualPicture->pictureArray[i] = malloc(LENGHT_TERMINAL*sizeof(char));
         	}
 
         	actualPicture = convertPictureIntoArray(fileRead, actualPicture);
@@ -108,34 +108,45 @@ picture* pbmReader(char fileName[])
 
 picture* convertPictureIntoArray(FILE *fileRead, picture *Picture)
 {
-	int i, j;
+	int i, j, k;
 	i = 0;
 	j = 0;
+	
 	int actualCharacter;
 	for(i = 0; i < Picture->Rows; i++)
 	{
-		for(j = 0; j < Picture->Columns+1; j++)
+		
+		for(j = 0; j <= LENGHT_TERMINAL; j++)
 		{
-			while(actualCharacter == ' ')//ce while permet d'enlever les espaces present dans le pbm
+			if(j < ((LENGHT_TERMINAL - (Picture->Columns+(Picture->Columns%2)))/2 ) || j >= ((LENGHT_TERMINAL + Picture->Columns)/2)  )
 			{
-				actualCharacter = getc(fileRead);
+				Picture->pictureArray[i][j] ='.';
 			}
-        	if(actualCharacter == '1')	          //ce if permettent de transformer les 1 et 0 du pbm en caractères
-       	        {
-            	       Picture->pictureArray[i][j] = 'X';
-          	}
-                else if(actualCharacter == '0')
-                {
- 	    	       Picture->pictureArray[i][j] = ' ';
-                }
-                else if(actualCharacter == '\n')
-                {
-                       Picture->pictureArray[i][j] = '\n';
-                }
+			else
+			{
+				while(actualCharacter == ' ' || actualCharacter == '\n')//ce while permet d'enlever les espaces present dans le pbm
+				{
+					actualCharacter = getc(fileRead);
+				}
 
-                actualCharacter = getc(fileRead);
+        			if(actualCharacter == '1')	          //ce if permettent de transformer les 1 et 0 du pbm en caractères
+       	        		{
+            	      			Picture->pictureArray[i][j]='X';
+          			}
+                		else if(actualCharacter == '0')
+                		{
+ 	    	      	 		Picture->pictureArray[i][j]= ' ';
+                		}
+                		
+			
+                		actualCharacter = getc(fileRead);
+			}
 		}
+
+	
+		
 	}
+		
 	return Picture;
 }
 
@@ -147,67 +158,39 @@ void printPicture(picture *Picture)
 	i = 0;
 	j = 0;
 	k = 0;
+	/*int **CenteredPicture = NULL;
+	/*CenteredPicture = malloc(80 * sizeof(int*));//allocation mémoire pour le tableaux contenat l'image
+        	for(int i = 0; i < 24; i++)
+        	{
+			CenteredPicture[i] = malloc(sizeof(int));
+        	}
+	CenteredPicture = initArray(CenteredPicture);
+	CenteredPicture = CenterPicture(Picture);*/
+	Height(Picture);
 	for(i = 0; i < Picture->Rows; i++)//ce double for permet de parcourir tout le tableaux de  caractères en lisant un par un tous les caractères de la ligne puis passe à la suivante
 	{		
-		for(j = 0; j < Picture->Columns+1; j++)
+		for(j = 0; j < LENGHT_TERMINAL; j++)
 		{	
-			putchar(Picture->pictureArray[i][j]);
+			printf("%c",Picture->pictureArray[i][j]);
 		}
-			
+		//printf("\n");	
 	}
+	Height(Picture);
 }
-/*
 
-void HeightPbm(int pictureHeight)
+void Height(picture* Picture)
 {
-	unsigned int i;
-
-	for(i = 0; i < (HEIGHT_TERMINAL - pictureHeight) / 2; i++)
+	for(int i = 0; i < (HEIGHT_TERMINAL - Picture->Rows)/2; i++)
 	{
 		putchar('\n');
 	}
 }
 
-void LenghtPbm(int pictureLenght)
-{
-	unsigned int i = 0;
-	
-	for(i = 0; i < (LENGHT_TERMINAL - pictureLenght) / 2; i++)
-	{
-		
-		putchar(' ');
-	}
-	
-	
-}*/
-
-
-int** Centering(picture *Picture)
-{
-	int i, j;
-	int offsetX = 0;
-	int offsetY = 0;
-	int CenteredPicture[80][24] = 0;
-
-	offsetX = (LENGHT_TERMINAL - Picture->Columns)/2;
-	offsetY = (HEIGHT_TERMINAL - Picture->Rows)/2;
-
-	for(i = 0; i < 	offsetY; i++)
-	{
-		for(j = 0;j < offsetX; j++)
-		{
-			CenteredPicture[i][j] = ' ';
-		}
-
-
-
-	}
-	
 
 
 
 
-}
+
 
 
 
