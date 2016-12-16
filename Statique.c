@@ -13,7 +13,7 @@
 
 void main(int argc, int *argv[])
 {
-	char *PictureName = "Pbm/sourire.pbm";
+	char *PictureName = "Pbm/heart.pbm";
 	FILE* fileRead = NULL;
 	picture *Picture;
 	Picture = pbmReader(PictureName);
