@@ -1,6 +1,7 @@
 #include "launcher.h"
 //#include "TimeRead.h"
 //#include "TimeRead.c"
+//#include "mainTimeRead.c"
 
 int screenChoice(int nb_random)             //CHOISI UN NB AU HASARD, 1:STATIC 2:DYNAMIC 3:INTERACTIVE
 {
@@ -24,6 +25,7 @@ void writeFile(int nb_random)               //SAUVEGARDE DANS LE FICHIER hist.tx
                         break;
 
                         case 2: // si nb_random = 2
+//	main();
                         fputs("\n2", file);
 	                system("sort -o histTrie.txt  hist.txt"); // fonction qui trie les caractère de hist.txt et les copient (triés) dans histTrie.txt avec paramètre "-o" pour écrire à la ligne dans le fichier
                         break;
@@ -104,3 +106,4 @@ void readHist() // lit le fichier historique non trié
         }
         fclose(fileHist); //ferme de fichier
 }
+

@@ -1,0 +1,158 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+int screenChoice(nb_random) 		//CHOISI UN NB AU HASARD, 1:STATIC 2:DYNAMIC 3:INTERACTIVE
+{
+        srand(time(NULL)); 		//initialise le générateur de nombre aléatoire
+        nb_random = (rand() %3) + 1; 	//choisi un nombre aleatoire entre 1 et 3
+        return nb_random;
+}
+
+
+void writeFile(nb_random)		//SAUVEGARDE DANS LE FICHIER hist.txt LE TYPE CHOISI 
+{
+	FILE* file = NULL; 		//initialise le pointeur de type file à NULL ("à zéro") 
+        file = fopen("hist.txt", "a"); 	//définir quel fichier ouvrir:a=écrire à la fin du fichier
+        if(file != NULL)		//si le pointeur a trouvé le fichier
+	{
+                switch (nb_random)
+		{
+                        case 1:
+                        printf("stat");
+                        fputs("\n1", file);
+                        break;
+                        case 2:
+			printf("dynamic");
+			// int execl(const char */home/juliette/ProjetC/.., const char *arg, ...) ;
+                        fputs("\n2", file);
+                        break;
+                        case 3:
+                        printf("interact");
+                        fputs("\n3", file);
+                        break;
+                        default:
+                        printf("ERREUR");
+			break;
+                }
+                fclose(file); // ferme le fichier
+        }
+        else	// écrit un message d'erreur si fichier non trouvé
+	{
+        	printf("Impossible d'ouvrir le fichier demandé");
+        }
+
+}
+int screenChoice(nb_random)             //CHOISI UN NB AU HASARD, 1:STATIC 2:DY$
+{
+        srand(time(NULL));              //initialise le générateur de nombre al$
+        nb_random = (rand() %3) + 1;    //choisi un nombre aleatoire entre 1 et$
+        return nb_random;
+}
+
+
+void writeFile(nb_random)               //SAUVEGARDE DANS LE FICHIER hist.txt L$
+{
+        FILE* file = NULL;              //initialise le pointeur de type file à$
+        file = fopen("hist.txt", "a");  //définir quel fichier ouvrir:a=écrire $
+        if(file != NULL)                //si le pointeur a trouvé le fichier
+        {
+                switch (nb_random)
+                {
+                        case 1:
+                        printf("stat");
+                        fputs("\n1", file);
+                        break;
+                        case 2:
+                        printf("dynamic");
+                        // int execl(const char */home/juliette/ProjetC/.., con$
+                        fputs("\n2", file);
+                        break;
+                        case 3:
+                        printf("interact");
+                        fputs("\n3", file);
+                        break;
+                        default:
+                        printf("ERREUR");
+
+int comptFiles(fileList, actualCharacter, actualFile, fileNumber, xMax)
+{
+	if(fileList == NULL)
+	{
+        	printf("Impossible d'ouvrir le fichier demandé");
+	}
+	while(actualCharacter != EOF) // boucle pour compter le nombre de fichier
+	{
+		if(actualCharacter == '\n')
+		{
+			actualFile ++;
+		}
+		actualCharacter = getc(fileList);
+	}
+	xMax = actualFile;
+	return xMax;
+}
+
+int randomPbm(fileList, fileNumber, xMax)
+{
+	srand(time(NULL));
+	fileNumber = rand()%(xMax);
+	fclose(fileList);
+	return fileNumber;
+}
+
+void stockPbmName(fileList, actualFile, actualCharacter, fileNumber, fileName, i)
+{
+	actualFile = 0;
+	actualCharacter = 0;
+	fileList = fopen("fileList.txt", "r");
+	while(actualFile < fileNumber) // boucle qui sert à se déplacer au niveau de la ligne contenant le nom du pbm à ouvrir
+	{
+		if(actualCharacter == '\n')
+		{
+			actualFile ++;
+		}
+		actualCharacter = getc(fileList);
+	}
+	fclose(fileList);
+}
+
+
+int main(int argc, char *argv[])
+{
+        int nb_random; // nombre aléatoire (pour choix écran)
+	int xMin = 0;
+	int xMax = 0;
+	int fileNumber = 0;
+	char fileName[25];
+	int actualCharacter = 0;
+	int actualFile = 0;
+	int fileQuantity = 0;
+	int i =0;
+
+        system("clear");
+
+	// CHOIX ECRAN RANDOM
+        nb_random = screenChoice(nb_random); // nombre aléatoire renvoyé
+	writeFile(nb_random); // nombre aléatoire écrit dans le fichier historique
+
+	// CHOIX PBM RANDOM (pour écran statique)
+	if(nb_random == 1)
+	{
+	        FILE* fileList = NULL;
+	        fileList = fopen("fileList.txt", "r");
+
+		xMax = comptFiles(fileList, actualCharacter, actualFile, fileNumber,  xMax);
+		printf("\n\n il y a %d  fichiers", xMax);
+		fileNumber = randomPbm(fileList, fileNumber, xMax);
+		printf("\n\n le fichier choisi est %d", fileNumber);
+		stockPbmName(fileList, actualFile, actualCharacter, fileNumber, fileName, i);
+	}
+	else
+	{
+		printf("end");
+	}
+	return 0;
+}
+

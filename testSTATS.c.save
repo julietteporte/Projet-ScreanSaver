@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+void readHist()
+{
+	FILE* fileHist = NULL;
+	int current_charact = 0;
+	fileHist = fopen("histTrie.txt", "r");
+
+	if (fileHist != NULL)
+	{				// Boucle de lecture des caractères un à un
+		current_charact = fgetc(fileHist); 	// On lit le caractère
+       		while(current_charact != EOF)			// Faire tant que fin du fichier non atteint (EOF)
+        	{
+			if(current_charact=='1')
+			{
+				printf("tg1\n");
+			}
+			else if(current_charact=='2')
+			{
+				printf("mamène2\n");
+			}
+			else if(current_charact=='3')
+			{
+				printf("éponge3\n");
+			}
+            		printf("%c\n", current_charact); 		// On l'affiche
+        	}
+	}
+        fclose(fileHist);
+}
+
+
+
+int main(int argc, char *argv[])
+{
+	if (argc ==2)
+	{
+		printf("test 1");
+
+		if(strcmp(argv[1],"-stats"))
+		{
+			printf("ERREUR");
+		}
+		else
+		{
+			readHist();
+		}
+       	}
+
+return 0;
+}
